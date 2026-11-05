@@ -45,8 +45,9 @@
           <circle cx="300" cy="330" r="290" fill="url(#glow)"/>
           <circle cx="552" cy="372" r="11" fill="#D6A72E"/><circle cx="549" cy="369" r="3.5" fill="#F0DFA8"/>
           <!-- fita de pendurar -->
-          <rect x="289" y="52" width="22" height="90" fill="#B01626"/><circle cx="300" cy="46" r="9" fill="none" stroke="#D6A72E" stroke-width="4"/>
+          <rect id="ribbon" x="289" y="52" width="22" height="88" fill="#B01626"/><circle cx="300" cy="46" r="9" fill="none" stroke="#D6A72E" stroke-width="4"/>
           <g id="baseLayer"></g>
+          <g id="dim"></g>
           <g id="items"></g>
           <g id="selection"></g>
         </svg>
@@ -63,8 +64,9 @@
 
     <div class="panel">
       <section class="step" aria-labelledby="s1">
-        <h2 id="s1"><span>1</span>Escolha a base</h2>
+        <h2 id="s1"><span>1</span>Escolha a base e o tamanho</h2>
         <div class="bases" id="bases"></div>
+        <div class="sizes" id="sizes" role="group" aria-label="Tamanho da guirlanda"></div>
       </section>
 
       <section class="step" aria-labelledby="s2">

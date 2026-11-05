@@ -64,6 +64,14 @@ header{background:var(--paper);border-bottom:1px solid var(--line);position:stic
 .pick svg{width:64px;height:64px;background:var(--pine);border-radius:8px;padding:6px;margin-bottom:6px}
 .base-card span,.pick span{font-size:.88rem;font-weight:500;line-height:1.25}
 .base-card small,.pick small{font-size:.8rem;color:var(--mute)}
+.sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.size-card{background:var(--snow);border:1.5px solid var(--line);border-radius:8px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:border-color .2s,background .2s}
+.size-card b{font-family:var(--display);font-size:1.3rem;font-weight:600;color:var(--pine)}
+.size-card small{font-size:.8rem;color:var(--mute)}
+.size-card:hover{border-color:var(--gold)}
+.size-card[aria-pressed="true"]{border-color:var(--pine);background:var(--t1)}
+.gl{animation:gl 2.4s ease-in-out infinite}
+@keyframes gl{50%{opacity:.2}}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .tabs button{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:6px 14px;font-size:.9rem;font-weight:500}
 .tabs button[aria-selected="true"]{background:var(--pine);border-color:var(--pine);color:#fff}

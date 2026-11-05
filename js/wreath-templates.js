@@ -27,15 +27,16 @@
   function n1(n) { return n.toFixed(1); }
 
   /* ---------- bases (desenhadas direto nas coordenadas da tela) ---------- */
-  function ring(o) {
-    var r = rng(o.seed), out = '', i, a, rad, x, y, rot, len, col;
-    out += '<circle cx="' + CX + '" cy="' + CY + '" r="190" fill="none" stroke="' + o.under + '" stroke-width="64"/>';
-    for (i = 0; i < o.n; i++) {
-      a = i / o.n * Math.PI * 2 + r() * 0.04;
-      rad = 190 + (r() - 0.5) * 54;
+  function ring(o, k) {
+    k = k || 1;
+    var r = rng(o.seed), out = '', i, a, rad, x, y, rot, len, col, n = Math.max(48, Math.round(o.n * k)), lk = 0.6 + 0.4 * k;
+    out += '<circle cx="' + CX + '" cy="' + CY + '" r="' + n1(190 * k) + '" fill="none" stroke="' + o.under + '" stroke-width="' + n1(64 * k) + '"/>';
+    for (i = 0; i < n; i++) {
+      a = i / n * Math.PI * 2 + r() * 0.04;
+      rad = (190 + (r() - 0.5) * 54) * k;
       x = CX + rad * Math.cos(a); y = CY + rad * Math.sin(a);
       rot = a * 180 / Math.PI + (r() - 0.5) * 80 + (i % 2 ? 38 : -38);
-      len = o.len * (0.7 + r() * 0.6);
+      len = o.len * lk * (0.7 + r() * 0.6);
       col = o.cols[Math.floor(r() * o.cols.length)];
       if (o.shape === 'leaf') {
         out += '<ellipse transform="translate(' + n1(x) + ' ' + n1(y) + ') rotate(' + rot.toFixed(0) + ')" cx="' + n1(len / 2) + '" cy="0" rx="' + n1(len / 2) + '" ry="' + n1(len * 0.38) + '" fill="' + col + '"/>';
@@ -44,8 +45,8 @@
       }
     }
     if (o.snow) {
-      for (i = 0; i < o.snow; i++) {
-        a = r() * Math.PI * 2; rad = 190 + (r() - 0.5) * 60;
+      for (i = 0; i < Math.round(o.snow * k); i++) {
+        a = r() * Math.PI * 2; rad = (190 + (r() - 0.5) * 60) * k;
         out += '<ellipse transform="translate(' + n1(CX + rad * Math.cos(a)) + ' ' + n1(CY + rad * Math.sin(a)) + ') rotate(' + (r() * 180).toFixed(0) + ')" rx="' + n1(5 + r() * 6) + '" ry="' + n1(2.5 + r() * 2) + '" fill="#fff" opacity="' + n1(0.7 + r() * 0.3) + '"/>';
       }
     }
@@ -54,11 +55,11 @@
 
   var bases = [
     { id: 'pinheiro', name: 'Pinheiro clássico',
-      render: function () { return ring({ seed: 11, n: 200, len: 48, shape: 'needle', under: C.pineD, cols: [C.pine, C.pineL, '#1f6b4d', '#124a34'] }); } },
+      render: function (k) { return ring({ seed: 11, n: 200, len: 48, shape: 'needle', under: C.pineD, cols: [C.pine, C.pineL, '#1f6b4d', '#124a34'] }, k); } },
     { id: 'nevada', name: 'Pinheiro nevado',
-      render: function () { return ring({ seed: 23, n: 200, len: 48, shape: 'needle', under: C.pineD, snow: 90, cols: [C.pine, '#1f6b4d', '#124a34', '#2f8561'] }); } },
+      render: function (k) { return ring({ seed: 23, n: 200, len: 48, shape: 'needle', under: C.pineD, snow: 90, cols: [C.pine, '#1f6b4d', '#124a34', '#2f8561'] }, k); } },
     { id: 'eucalipto', name: 'Eucalipto',
-      render: function () { return ring({ seed: 37, n: 150, len: 30, shape: 'leaf', under: '#4a6b5a', cols: ['#8fb3a0', '#6f9a86', '#a9c6b6', '#5d8a74'] }); } }
+      render: function (k) { return ring({ seed: 37, n: 150, len: 30, shape: 'leaf', under: '#4a6b5a', cols: ['#8fb3a0', '#6f9a86', '#a9c6b6', '#5d8a74'] }, k); } }
   ];
 
   /* ---------- elementos (caixa 100x100) ---------- */
@@ -68,11 +69,46 @@
       '<path d="M18 38 Q30 30 43 46M82 38 Q70 30 57 46" stroke="' + d + '" stroke-width="2" fill="none" opacity=".5"/>' +
       '<circle cx="50" cy="52" r="9" fill="' + d + '"/><circle cx="47" cy="49" r="2.4" fill="#fff" opacity=".45"/>';
   }
-  function ball(c) {
-    return '<path d="M50 3 V13" stroke="' + C.goldD + '" stroke-width="2.5" fill="none"/><rect x="43" y="12" width="14" height="10" rx="2.5" fill="' + C.gold + '"/>' +
-      '<circle cx="50" cy="58" r="35" fill="' + c + '"/><path d="M27 52 Q31 33 50 27" stroke="#fff" stroke-opacity=".55" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M17 66 Q50 86 83 66" stroke="' + C.goldL + '" stroke-width="3" fill="none" opacity=".85"/>';
+  var BALL = {
+    red:   { n: 'vermelha', b: '#B01626', d: '#6c0b16', l: '#E8505F', sp: ['#ffffff', '#F7B7BE', '#F0DFA8'] },
+    white: { n: 'branca',   b: '#F4F6F3', d: '#a9b4ad', l: '#ffffff', sp: ['#ffffff', '#C9D6E3', '#F0DFA8'] },
+    gold:  { n: 'dourada',  b: '#D6A72E', d: '#8a6208', l: '#F7E4A2', sp: ['#ffffff', '#F7E4A2', '#8a6208'] }
+  };
+  var FINISH = { gloss: 'brilhante', glitter: 'glitter', matte: 'opaca' };
+  // bola em 3 acabamentos: brilhante (reflexo forte), glitter (brilhos que cintilam) e opaca (sem reflexo)
+  function ball(color, finish) {
+    var p = BALL[color], id = 'bg-' + finish + '-' + color, stops, out, r, i, a, d, x, y, sz;
+    stops = finish === 'matte'
+      ? '<stop offset="0" stop-color="' + p.b + '"/><stop offset=".7" stop-color="' + p.b + '"/><stop offset="1" stop-color="' + p.d + '"/>'
+      : '<stop offset="0" stop-color="' + p.l + '"/><stop offset=".5" stop-color="' + p.b + '"/><stop offset="1" stop-color="' + p.d + '"/>';
+    out = '<defs><radialGradient id="' + id + '" cx=".36" cy=".32" r=".85">' + stops + '</radialGradient></defs>' +
+      '<path d="M50 3 V13" stroke="' + C.goldD + '" stroke-width="2.5" fill="none"/><rect x="43" y="12" width="14" height="10" rx="2.5" fill="' + C.gold + '" stroke="' + C.goldD + '" stroke-width="1"/>' +
+      '<circle cx="50" cy="58" r="35" fill="url(#' + id + ')"/>';
+    if (finish === 'gloss') {
+      out += '<ellipse cx="37" cy="41" rx="12" ry="7" transform="rotate(-38 37 41)" fill="#fff" opacity=".75"/>' +
+        '<circle cx="66" cy="80" r="3.2" fill="#fff" opacity=".35"/>' +
+        '<path d="M17 66 Q50 86 83 66" stroke="#fff" stroke-width="2" fill="none" opacity=".35"/>';
+    } else if (finish === 'matte') {
+      out += '<ellipse cx="38" cy="44" rx="15" ry="9" transform="rotate(-38 38 44)" fill="#fff" opacity=".12"/>';
+    } else {
+      r = rng(color.length * 97 + 5);
+      for (i = 0; i < 46; i++) {
+        a = r() * Math.PI * 2; d = 33 * Math.sqrt(r());
+        x = 50 + d * Math.cos(a); y = 58 + d * Math.sin(a); sz = 0.9 + r() * 1.3;
+        out += '<circle' + (i < 12 ? ' class="gl" style="animation-delay:' + n1(r() * 2.4) + 's"' : '') + ' cx="' + n1(x) + '" cy="' + n1(y) + '" r="' + n1(sz) + '" fill="' + p.sp[Math.floor(r() * 3)] + '" opacity="' + n1(0.65 + r() * 0.35) + '"/>';
+      }
+      [[36, 44], [64, 52], [48, 74]].forEach(function (q, j) {
+        out += '<path class="gl" style="animation-delay:' + (j * 0.8) + 's" transform="translate(' + q[0] + ' ' + q[1] + ')" d="M0 -5.5 L1.4 -1.4 L5.5 0 L1.4 1.4 L0 5.5 L-1.4 1.4 L-5.5 0 L-1.4 -1.4Z" fill="#fff"/>';
+      });
+    }
+    return out;
   }
+  var ballItems = [];
+  ['gloss', 'glitter', 'matte'].forEach(function (f) {
+    ['red', 'white', 'gold'].forEach(function (c) {
+      ballItems.push({ id: 'ball-' + f + '-' + c, name: 'Bola ' + FINISH[f] + ' ' + BALL[c].n, group: 'Bolas', scale: 0.7, svg: ball(c, f) });
+    });
+  });
   function pinecone() {
     var rows = [3, 4, 5, 5, 4, 3], out = '<path d="M50 6 V14" stroke="' + C.brown + '" stroke-width="3"/>', r, k, w, cx, cy;
     for (r = 0; r < rows.length; r++) {
@@ -131,10 +167,6 @@
     { id: 'bow-red',    name: 'Laço cereja',     group: 'Laços',    scale: 1.0, svg: bow(C.red, C.redD) },
     { id: 'bow-gold',   name: 'Laço dourado',    group: 'Laços',    scale: 1.0, svg: bow(C.gold, C.goldD) },
     { id: 'bow-snow',   name: 'Laço neve',       group: 'Laços',    scale: 1.0, svg: bow(C.white, '#b9c4bd') },
-    { id: 'ball-red',   name: 'Bola cereja',     group: 'Bolas',     scale: 0.7, svg: ball(C.red) },
-    { id: 'ball-gold',  name: 'Bola dourada',    group: 'Bolas',     scale: 0.7, svg: ball(C.gold) },
-    { id: 'ball-pine',  name: 'Bola pinho',      group: 'Bolas',     scale: 0.7, svg: ball('#2f8561') },
-    { id: 'ball-snow',  name: 'Bola neve',       group: 'Bolas',     scale: 0.7, svg: ball('#e6ece8') },
     { id: 'pinecone',   name: 'Pinha nevada',    group: 'Natureza',  scale: 0.8, svg: pinecone() },
     { id: 'berries',    name: 'Frutos vermelhos', group: 'Natureza', scale: 0.8, svg: berries() },
     { id: 'holly',      name: 'Azevinho',        group: 'Natureza',  scale: 0.8, svg: holly() },
@@ -144,11 +176,19 @@
     { id: 'cane',       name: 'Bengala doce',    group: 'Detalhes',  scale: 0.8, svg: cane() }
   ];
 
+  Array.prototype.splice.apply(items, [3, 0].concat(ballItems));
+
+  var sizes = [
+    { cm: 20, k: 0.42, max: 12 },
+    { cm: 30, k: 0.64, max: 24 },
+    { cm: 50, k: 1, max: 40 }
+  ];
+
   var doors = [
     { id: 'cherry', name: 'Porta cereja', color: '#8A0F1C' },
     { id: 'pine',   name: 'Porta pinho',  color: '#0E3A2B' },
     { id: 'snow',   name: 'Porta neve',   color: '#E3EAEC' }
   ];
 
-  window.WREATH_TEMPLATES = { center: { x: CX, y: CY }, bases: bases, items: items, doors: doors, groups: ['Laços', 'Bolas', 'Natureza', 'Detalhes'] };
+  window.WREATH_TEMPLATES = { center: { x: CX, y: CY }, bases: bases, items: items, doors: doors, sizes: sizes, groups: ['Laços', 'Bolas', 'Natureza', 'Detalhes'] };
 })();
