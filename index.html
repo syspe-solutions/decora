@@ -34,11 +34,6 @@ header{background:var(--paper);border-bottom:1px solid var(--line);position:stic
 .search{border:1px solid var(--line);border-radius:999px;padding:10px 18px;font:inherit;font-size:.92rem;width:min(300px,100%);background:var(--snow)}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:2.1rem;font-weight:600;color:var(--cherry);letter-spacing:-.02em;justify-self:center}
 .logo svg{width:26px;height:34px}
-.acts{justify-self:end;display:flex;gap:20px;font-size:.92rem;align-items:center}
-.bag{position:relative;display:inline-flex;gap:6px;align-items:center;background:none;border:0;padding:4px}
-.bag b{background:var(--cherry);color:#fff;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:.75rem;font-weight:600}
-.bag b.bump{animation:bump .5s var(--ease)}
-@keyframes bump{40%{transform:scale(1.5)}}
 nav{border-top:1px solid var(--line)}
 nav ul{list-style:none;padding:0;display:flex;gap:clamp(16px,3vw,36px);justify-content:center;overflow-x:auto;white-space:nowrap}
 nav a{display:block;padding:12px 0;font-size:.95rem;font-weight:500;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
@@ -137,21 +132,11 @@ section{padding-block:64px 0}
 .old{color:var(--mute);text-decoration:line-through;font-size:.86rem;margin-top:8px;min-height:1.3em}
 .price{font-family:var(--display);font-size:1.6rem;color:var(--cherry);font-weight:600}
 .parc{font-size:.84rem;color:var(--mute)}
-.add{margin:12px 18px 18px;padding:10px;border-radius:999px;border:1.5px solid var(--pine);background:transparent;color:var(--pine);font-weight:600;font-size:.9rem;transition:background .2s,color .2s}
+.add{display:block;text-align:center;margin:12px 18px 18px;padding:10px;border-radius:999px;border:1.5px solid var(--pine);background:transparent;color:var(--pine);font-weight:600;font-size:.9rem;transition:background .2s,color .2s}
 .add:hover{background:var(--pine);color:#fff}
-.add.done{background:var(--pine-2);border-color:var(--pine-2);color:#fff}
 .flame{transform-origin:60px 44px;animation:flicker 1.6s ease-in-out infinite alternate}
 @keyframes flicker{from{transform:scale(1,1) rotate(-2deg)}to{transform:scale(.9,1.12) rotate(2deg)}}
 
-/* cupom */
-.coupon{margin-top:72px;background:var(--cherry);color:#fff;border-radius:8px;display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:28px;padding:clamp(28px,5vw,60px);position:relative;overflow:hidden}
-.coupon::after{content:"";position:absolute;inset:10px;border:1.5px dashed rgba(240,223,168,.7);border-radius:4px;pointer-events:none}
-.coupon h2{font-size:clamp(1.9rem,4vw,3rem)}
-.coupon p{margin-top:10px;color:#f6d9dc}
-.code{justify-self:center;text-align:center;background:rgba(0,0,0,.2);border:2px solid var(--gold);border-radius:6px;padding:18px 30px;color:#fff;transition:background .2s}
-.code:hover{background:rgba(0,0,0,.32)}
-.code b{display:block;font-family:var(--display);font-size:2.2rem;letter-spacing:.1em;color:var(--gold-l);font-weight:600}
-.code small{font-size:.85rem;color:#f6d9dc}
 
 footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0 24px}
 .fgrid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:32px;font-size:.95rem}
@@ -159,8 +144,6 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
 .fgrid ul{padding:0;list-style:none}.fgrid li{margin:5px 0;opacity:.85}
 .copy{margin-top:34px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);font-size:.85rem;text-align:center;opacity:.75}
 
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:var(--pine);color:#fff;padding:12px 22px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:.35s var(--ease);z-index:50}
-.toast.on{opacity:1;transform:translate(-50%,0)}
 
 @media(max-width:900px){
   .head{grid-template-columns:auto 1fr}.search{display:none}.logo{justify-self:start}
@@ -171,7 +154,6 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
   .perks{grid-template-columns:1fr 1fr}
   .cats{grid-template-columns:repeat(3,1fr)}
   .prods{grid-template-columns:repeat(2,1fr)}
-  .coupon{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:560px){.t-a,.t-b{grid-column:span 2}.perks{grid-template-columns:1fr}.prods{gap:12px}.card .info{padding-inline:12px}.add{margin-inline:12px}}
@@ -242,10 +224,6 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
       <svg viewBox="0 0 26 34" aria-hidden="true"><rect x="9" y="0" width="8" height="6" rx="1.5" fill="#D6A72E"/><circle cx="13" cy="21" r="12" fill="#B01626"/><path d="M5 18 Q8 11 14 10" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
       Decora
     </a>
-    <div class="acts">
-      <a href="#">Entrar</a><a href="#">Favoritos</a>
-      <button class="bag" type="button" aria-label="Sacola">Sacola <b id="bagCount">0</b></button>
-    </div>
   </div>
   <nav aria-label="Categorias"><div class="wrap"><ul>
     <li><a class="hot" href="#">Natal</a></li><li><a href="#">Árvores</a></li><li><a href="#">Enfeites</a></li>
@@ -363,21 +341,17 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
   <section aria-labelledby="h-prod">
     <div class="sec-h"><h2 id="h-prod">Mais vendidos do Natal</h2><p>Escolhidos por quem já decorou a casa</p></div>
     <div class="prods">
-      <article class="card"><span class="tag">-30%</span><div class="ph" style="background:var(--t1)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-tree"/></svg></div><div class="info"><h3>Árvore nevada pinheiro 1,80 m</h3><div class="old">R$ 599,90</div><div class="price">R$ 419,90</div><div class="parc">10x de R$ 41,99 sem juros</div></div><button class="add" type="button" data-name="Árvore nevada">Adicionar à sacola</button></article>
-      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t2)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-baubles"/></svg></div><div class="info"><h3>Kit 12 bolas douradas e vermelhas</h3><div class="old"></div><div class="price">R$ 89,90</div><div class="parc">3x de R$ 29,96 sem juros</div></div><button class="add" type="button" data-name="Kit de bolas">Adicionar à sacola</button></article>
-      <article class="card"><span class="tag">-20%</span><div class="ph" style="background:var(--t4)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-lights"/></svg></div><div class="info"><h3>Pisca-pisca LED luz quente 200 leds</h3><div class="old">R$ 74,90</div><div class="price">R$ 59,90</div><div class="parc">2x de R$ 29,95 sem juros</div></div><button class="add" type="button" data-name="Pisca-pisca LED">Adicionar à sacola</button></article>
-      <article class="card"><div class="ph" style="background:var(--t3)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-wreath"/></svg></div><div class="info"><h3>Guirlanda de porta com frutos vermelhos</h3><div class="old"></div><div class="price">R$ 129,90</div><div class="parc">5x de R$ 25,98 sem juros</div></div><button class="add" type="button" data-name="Guirlanda">Adicionar à sacola</button></article>
-      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t2)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-mat"/></svg></div><div class="info"><h3>Jogo americano xadrez, 4 unidades</h3><div class="old"></div><div class="price">R$ 79,90</div><div class="parc">2x de R$ 39,95 sem juros</div></div><button class="add" type="button" data-name="Jogo americano">Adicionar à sacola</button></article>
-      <article class="card"><span class="tag">-15%</span><div class="ph" style="background:var(--t1)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-stocking"/></svg></div><div class="info"><h3>Meia de lareira em veludo vermelho</h3><div class="old">R$ 69,90</div><div class="price">R$ 59,40</div><div class="parc">2x de R$ 29,70 sem juros</div></div><button class="add" type="button" data-name="Meia de lareira">Adicionar à sacola</button></article>
-      <article class="card"><div class="ph" style="background:var(--t4)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-candle"/></svg></div><div class="info"><h3>Vela perfumada canela e laranja</h3><div class="old"></div><div class="price">R$ 54,90</div><div class="parc">2x de R$ 27,45 sem juros</div></div><button class="add" type="button" data-name="Vela perfumada">Adicionar à sacola</button></article>
-      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t3)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-star"/></svg></div><div class="info"><h3>Estrela de ponta dourada para árvore</h3><div class="old"></div><div class="price">R$ 49,90</div><div class="parc">2x de R$ 24,95 sem juros</div></div><button class="add" type="button" data-name="Estrela dourada">Adicionar à sacola</button></article>
+      <article class="card"><span class="tag">-30%</span><div class="ph" style="background:var(--t1)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-tree"/></svg></div><div class="info"><h3>Árvore nevada pinheiro 1,80 m</h3><div class="old">R$ 599,90</div><div class="price">R$ 419,90</div><div class="parc">10x de R$ 41,99 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Árvore nevada">Pedir no WhatsApp</a></article>
+      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t2)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-baubles"/></svg></div><div class="info"><h3>Kit 12 bolas douradas e vermelhas</h3><div class="old"></div><div class="price">R$ 89,90</div><div class="parc">3x de R$ 29,96 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Kit de bolas">Pedir no WhatsApp</a></article>
+      <article class="card"><span class="tag">-20%</span><div class="ph" style="background:var(--t4)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-lights"/></svg></div><div class="info"><h3>Pisca-pisca LED luz quente 200 leds</h3><div class="old">R$ 74,90</div><div class="price">R$ 59,90</div><div class="parc">2x de R$ 29,95 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Pisca-pisca LED">Pedir no WhatsApp</a></article>
+      <article class="card"><div class="ph" style="background:var(--t3)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-wreath"/></svg></div><div class="info"><h3>Guirlanda de porta com frutos vermelhos</h3><div class="old"></div><div class="price">R$ 129,90</div><div class="parc">5x de R$ 25,98 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Guirlanda">Pedir no WhatsApp</a></article>
+      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t2)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-mat"/></svg></div><div class="info"><h3>Jogo americano xadrez, 4 unidades</h3><div class="old"></div><div class="price">R$ 79,90</div><div class="parc">2x de R$ 39,95 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Jogo americano">Pedir no WhatsApp</a></article>
+      <article class="card"><span class="tag">-15%</span><div class="ph" style="background:var(--t1)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-stocking"/></svg></div><div class="info"><h3>Meia de lareira em veludo vermelho</h3><div class="old">R$ 69,90</div><div class="price">R$ 59,40</div><div class="parc">2x de R$ 29,70 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Meia de lareira">Pedir no WhatsApp</a></article>
+      <article class="card"><div class="ph" style="background:var(--t4)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-candle"/></svg></div><div class="info"><h3>Vela perfumada canela e laranja</h3><div class="old"></div><div class="price">R$ 54,90</div><div class="parc">2x de R$ 27,45 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Vela perfumada">Pedir no WhatsApp</a></article>
+      <article class="card"><span class="tag g">Novo</span><div class="ph" style="background:var(--t3)"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#p-star"/></svg></div><div class="info"><h3>Estrela de ponta dourada para árvore</h3><div class="old"></div><div class="price">R$ 49,90</div><div class="parc">2x de R$ 24,95 sem juros</div></div><a class="add" href="#" target="_blank" rel="noopener" data-name="Estrela dourada">Pedir no WhatsApp</a></article>
     </div>
   </section>
 
-  <div class="coupon">
-    <div><h2>10% de desconto na primeira compra</h2><p>Digite o cupom no carrinho. Válido até 24/12.</p></div>
-    <button class="code" type="button" id="copy"><small id="copyLbl">Copiar cupom</small><b>NATAL10</b></button>
-  </div>
 </main>
 
 <footer>
@@ -392,7 +366,6 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
   </div>
 </footer>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
@@ -423,23 +396,12 @@ footer{margin-top:80px;background:var(--pine);color:var(--gold-l);padding:52px 0
     tile.addEventListener('pointerleave',function(){tile.style.setProperty('--px',0);tile.style.setProperty('--py',0)});
   }
 
-  // sacola e aviso
-  var count=0, bag=document.getElementById('bagCount'), toast=document.getElementById('toast'), tt;
-  function say(msg){toast.textContent=msg;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2200)}
+  // pedidos são feitos pelo WhatsApp: cada produto abre a conversa com o nome já na mensagem
   document.querySelectorAll('.add').forEach(function(b){
-    b.addEventListener('click',function(){
-      count++; bag.textContent=count; bag.classList.remove('bump'); void bag.offsetWidth; bag.classList.add('bump');
-      b.classList.add('done'); b.textContent='Adicionado'; setTimeout(function(){b.classList.remove('done');b.textContent='Adicionar à sacola'},1600);
-      say(b.dataset.name+' adicionado à sacola');
-    });
+    var msg='Olá, tudo bem? Vi "'+b.dataset.name+'" no site da Decora e quero saber o valor, o prazo de entrega e as formas de pagamento. Pode me ajudar a fechar o pedido?';
+    b.href='https://wa.me/5581973257103?text='+encodeURIComponent(msg);
   });
 
-  // cupom
-  document.getElementById('copy').addEventListener('click',function(){
-    var lbl=document.getElementById('copyLbl');
-    function ok(){lbl.textContent='Cupom copiado';say('Cupom NATAL10 copiado');setTimeout(function(){lbl.textContent='Copiar cupom'},2200)}
-    try{navigator.clipboard.writeText('NATAL10').then(ok,ok)}catch(e){ok()}
-  });
 })();
 </script>
 </body>

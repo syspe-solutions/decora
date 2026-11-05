@@ -97,8 +97,10 @@
     document.querySelectorAll('[data-act]').forEach(function (b) { b.disabled = !it; });
 
     var rows = summary().map(function (r) { return '<li><span>' + r.name + '</span><b>× ' + r.n + '</b></li>'; }).join('');
-    $('#sumList').innerHTML = '<li><span>Base</span><b>' + baseOf(state.base).name + '</b></li>' +
-      (rows || '<li><span>Adicione ao menos um enfeite para pedir.</span></li>');
+    var photoQty = summary().filter(function (r) { return r.photo; }).reduce(function (a, r) { return a + r.n; }, 0);
+    $('#sumList').innerHTML = '<li><span>Base</span><b>' + baseOf(state.base).name + ', ' + state.size + ' cm</b></li>' +
+      (rows || '<li><span>Adicione ao menos um enfeite para pedir.</span></li>') +
+      (photoQty ? '<li class="note"><span>Você escolheu ' + photoQty + ' bola(s) com foto. Mande as fotos pelo WhatsApp na hora de fechar o pedido.</span></li>' : '');
     $('#count').textContent = state.items.length + ' de ' + MAX() + ' peças';
     $('#clearBtn').disabled = !state.items.length;
     updateCta();
@@ -109,11 +111,12 @@
   function summary() {
     var counts = {}, order = [];
     state.items.forEach(function (i) { if (!counts[i.tpl]) { counts[i.tpl] = 0; order.push(i.tpl); } counts[i.tpl]++; });
-    return order.map(function (id) { return { name: tpl(id).name, n: counts[id] }; });
+    return order.map(function (id) { return { name: tpl(id).name, n: counts[id], photo: !!tpl(id).photo }; });
   }
   function message() {
     var door = T.doors.filter(function (d) { return d.id === state.door; })[0].name.toLowerCase();
-    var list = summary().map(function (r) { return '• ' + r.n + 'x ' + r.name; }).join('\n');
+    var rows = summary(), hasPhoto = rows.some(function (r) { return r.photo; });
+    var list = rows.map(function (r) { return '• ' + r.n + 'x ' + r.name + (r.photo ? ' (envio as fotos por aqui)' : ''); }).join('\n');
     return [
       '🎄✨ Olá, tudo bem? Montei minha guirlanda de Natal no site da Decora e quero ela na minha porta!',
       '',
@@ -123,9 +126,10 @@
       '🚪 Visual testado na ' + door,
       '',
       '📸 Segue a foto do meu projeto.',
+      hasPhoto ? '🖼️ Vou mandar aqui as fotos para as bolas com foto.' : null,
       '',
       'Pode me passar o valor, o prazo de entrega e as formas de pagamento? Quero fechar hoje para garantir que chegue antes do Natal! 🎁❤️'
-    ].join('\n');
+    ].filter(function (l) { return l !== null; }).join('\n');
   }
   function updateCta() {
     var a = $('#waBtn'), ok = state.items.length > 0;
@@ -189,6 +193,7 @@
     function showGroup(g) {
       tabs.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.group === g)); });
       grid.innerHTML = '';
+      $('#tabNote').hidden = g !== 'Com foto';
       T.items.filter(function (t) { return t.group === g; }).forEach(function (t) {
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'pick';
@@ -239,7 +244,7 @@
     };
     state.items.push(it); state.sel = it.uid; fresh = it.uid;
     renderItems(); save();
-    if (!opts || !opts.quiet) say(t.name + ' adicionado');
+    if (!opts || !opts.quiet) say(t.photo ? 'Bola com foto adicionada. Mande as fotos pelo WhatsApp ao fechar o pedido.' : t.name + ' adicionado');
   }
   function setSize(cm) {
     var ns = sizeOf(cm), os = sizeOf(), f, sf;

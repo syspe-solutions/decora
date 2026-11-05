@@ -178,6 +178,28 @@
 
   Array.prototype.splice.apply(items, [3, 0].concat(ballItems));
 
+  // bola com foto: esfera transparente (vidro/acrílico) com a foto impressa dentro.
+  // O site só mostra o lugar da foto; o cliente manda as fotos pelo WhatsApp na hora do pedido.
+  items.push({
+    id: 'ball-photo', name: 'Bola com foto', group: 'Com foto', scale: 0.85, photo: true,
+    svg:
+      '<defs><radialGradient id="gl-clear" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".72" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></radialGradient></defs>' +
+      '<path d="M50 3 V13" stroke="' + C.goldD + '" stroke-width="2.5" fill="none"/><rect x="43" y="12" width="14" height="10" rx="2.5" fill="' + C.gold + '" stroke="' + C.goldD + '" stroke-width="1"/>' +
+      '<circle cx="50" cy="58" r="35" fill="#dcefff" fill-opacity=".12"/>' +
+      // foto impressa dentro da esfera, levemente inclinada
+      '<g transform="rotate(-7 50 58)"><rect x="34" y="43" width="36" height="35" rx="2" fill="#000" opacity=".14" transform="translate(1.500 2)"/>' +
+      '<rect x="32" y="41" width="36" height="35" rx="2" fill="#fff"/><rect x="35" y="44" width="30" height="24" fill="#CFE3F2"/>' +
+      '<circle cx="58" cy="51" r="3.600" fill="#F7E4A2"/><path d="M35 68 V59 L43 52 L50 60 L55 56 L65 64 V68Z" fill="#2f8561"/><path d="M35 68 V63 L42 58 L49 65 L65 61 V68Z" fill="#17543D"/></g>' +
+      // poeira de glitter no fundo da esfera
+      '<g fill="#F0DFA8"><circle cx="38" cy="84" r="1.300"/><circle cx="50" cy="88" r="1.600"/><circle cx="62" cy="85" r="1.200"/><circle cx="44" cy="90" r="1"/><circle cx="57" cy="91" r="1.100"/></g>' +
+      // vidro: borda, reflexos e brilho
+      '<circle cx="50" cy="58" r="35" fill="url(#gl-clear)"/>' +
+      '<circle cx="50" cy="58" r="35" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2"/><circle cx="50" cy="58" r="36.200" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="1"/>' +
+      '<path d="M22 52 Q25 35 43 27" stroke="#fff" stroke-opacity=".9" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+      '<path d="M30 86 Q50 96 70 86" stroke="#fff" stroke-opacity=".4" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<circle cx="72" cy="42" r="2.200" fill="#fff" opacity=".85"/>'
+  });
+
   var sizes = [
     { cm: 20, k: 0.42, max: 12 },
     { cm: 30, k: 0.64, max: 24 },
@@ -190,5 +212,5 @@
     { id: 'snow',   name: 'Porta neve',   color: '#E3EAEC' }
   ];
 
-  window.WREATH_TEMPLATES = { center: { x: CX, y: CY }, bases: bases, items: items, doors: doors, sizes: sizes, groups: ['Laços', 'Bolas', 'Natureza', 'Detalhes'] };
+  window.WREATH_TEMPLATES = { center: { x: CX, y: CY }, bases: bases, items: items, doors: doors, sizes: sizes, groups: ['Laços', 'Bolas', 'Com foto', 'Natureza', 'Detalhes'] };
 })();

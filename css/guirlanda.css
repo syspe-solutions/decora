@@ -83,6 +83,9 @@ header{background:var(--paper);border-bottom:1px solid var(--line);position:stic
 .tools .danger:not(:disabled):hover{background:#f7e1e1;border-color:var(--cherry);color:var(--cherry-d)}
 
 .sum{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:6px;font-size:.92rem}
+.photo-note{margin-top:12px;padding:12px 14px;border-radius:8px;background:var(--t3);border:1px dashed var(--gold);font-size:.9rem;color:var(--ink)}
+.photo-note[hidden]{display:none}
+.sum li.note{margin-top:4px;padding:10px 12px;border-radius:8px;background:var(--t3);font-size:.88rem}
 .sum li{display:flex;justify-content:space-between;gap:12px}
 .total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px}
 .total b{font-family:var(--display);font-size:2rem;color:var(--cherry);font-weight:600}
