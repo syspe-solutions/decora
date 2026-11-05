@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monte sua guirlanda | Decora Natal</title>
+<meta name="description" content="Escolha a base, empilhe laços, bolas e frutos e veja a guirlanda pronta na porta antes de comprar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/guirlanda.css">
+</head>
+<body>
+<div class="bar">Frete grátis acima de R$ 299 em todo o Brasil</div>
+<header>
+  <div class="wrap head">
+    <a class="logo" href="index.html" aria-label="Decora Natal, página inicial">
+      <svg viewBox="0 0 26 34" aria-hidden="true"><rect x="9" y="0" width="8" height="6" rx="1.5" fill="#D6A72E"/><circle cx="13" cy="21" r="12" fill="#B01626"/><path d="M5 18 Q8 11 14 10" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      Decora
+    </a>
+    <div class="acts">
+      <a href="index.html">Voltar à loja</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <h1>Monte sua guirlanda</h1>
+    <p>Escolha a base e empilhe os enfeites como quiser. Cada peça pode ser arrastada, girada, ampliada e colocada por cima ou por baixo das outras.</p>
+  </div>
+
+  <div class="builder">
+    <div class="stage">
+      <div class="stage-box">
+        <svg id="canvas" viewBox="0 0 600 660" role="img" aria-label="Pré-visualização da guirlanda na porta">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F0DFA8" stop-opacity=".35"/><stop offset="1" stop-color="#F0DFA8" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect id="doorRect" width="600" height="660" fill="#8A0F1C"/>
+          <g fill="none" stroke="#000" stroke-opacity=".2" stroke-width="4">
+            <rect x="40" y="40" width="200" height="580" rx="8"/><rect x="360" y="40" width="200" height="580" rx="8"/>
+            <rect x="56" y="56" width="168" height="548" rx="4" stroke-opacity=".1"/><rect x="376" y="56" width="168" height="548" rx="4" stroke-opacity=".1"/>
+          </g>
+          <circle cx="300" cy="330" r="290" fill="url(#glow)"/>
+          <circle cx="552" cy="372" r="11" fill="#D6A72E"/><circle cx="549" cy="369" r="3.5" fill="#F0DFA8"/>
+          <!-- fita de pendurar -->
+          <rect x="289" y="52" width="22" height="90" fill="#B01626"/><circle cx="300" cy="46" r="9" fill="none" stroke="#D6A72E" stroke-width="4"/>
+          <g id="baseLayer"></g>
+          <g id="items"></g>
+          <g id="selection"></g>
+        </svg>
+      </div>
+      <div class="stage-tools">
+        <div class="doors" id="doors"><span>Porta</span></div>
+        <div class="row" style="grid-template-columns:auto auto;gap:8px">
+          <button class="btn ghost" type="button" id="randBtn">Sortear enfeites</button>
+          <button class="btn ghost" type="button" id="clearBtn">Limpar</button>
+        </div>
+      </div>
+      <p class="hint">Teclado: setas movem a peça selecionada, [ e ] giram, + e − mudam o tamanho, Page Up e Page Down mudam a camada, Delete remove.</p>
+    </div>
+
+    <div class="panel">
+      <section class="step" aria-labelledby="s1">
+        <h2 id="s1"><span>1</span>Escolha a base</h2>
+        <div class="bases" id="bases"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s2">
+        <h2 id="s2"><span>2</span>Adicione enfeites</h2>
+        <div class="tabs" id="tabs" role="tablist" aria-label="Tipos de enfeite"></div>
+        <div class="palette" id="palette"></div>
+        <p class="small" style="margin-top:10px" id="count">0 de 40 peças</p>
+      </section>
+
+      <section class="step" aria-labelledby="s3">
+        <h2 id="s3"><span>3</span>Ajuste a peça</h2>
+        <p class="sel-name" id="selName">Nenhuma peça selecionada</p>
+        <p class="sel-help" id="selHelp" aria-live="polite">Toque numa peça da guirlanda para ajustar.</p>
+        <div class="tools">
+          <button type="button" data-act="rotL" disabled>Girar à esquerda</button>
+          <button type="button" data-act="rotR" disabled>Girar à direita</button>
+          <button type="button" data-act="smaller" disabled>Diminuir</button>
+          <button type="button" data-act="bigger" disabled>Aumentar</button>
+          <button type="button" data-act="front" disabled>Trazer para frente</button>
+          <button type="button" data-act="back" disabled>Enviar para trás</button>
+          <button type="button" data-act="dup" disabled>Duplicar</button>
+          <button type="button" class="danger" data-act="del" disabled>Remover</button>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="s4">
+        <h2 id="s4"><span>4</span>Resumo</h2>
+        <ul class="sum" id="sumList" aria-live="polite"></ul>
+        <div class="cta">
+          <a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 00-7.8 13.5L3 21l4.6-1.2A9 9 0 1012 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8.5c0 3.5 3 6.5 6.500 6.500l1-1.800-2-1-.9.900c-1-.4-2-1.400-2.400-2.400l.9-.9-1-2z" fill="currentColor"/></svg>
+            Pedir minha guirlanda no WhatsApp
+          </a>
+          <p class="small" id="waHelp"></p>
+          <button class="btn ghost" type="button" id="photoBtn">Salvar como foto</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer><p>© 2026 Decora. Feliz Natal.</p></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/wreath-templates.js"></script>
+<script src="js/wreath-builder.js"></script>
+</body>
+</html>
