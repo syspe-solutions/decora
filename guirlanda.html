@@ -32,6 +32,7 @@
 
   <div class="builder">
     <div class="stage">
+      <div class="stage-top">
       <div class="stage-box">
         <svg id="canvas" viewBox="0 0 600 660" role="img" aria-label="Pré-visualização da guirlanda na porta">
           <defs>
@@ -52,6 +53,17 @@
           <g id="selection"></g>
         </svg>
       </div>
+      <div class="minibar" role="toolbar" aria-label="Ajustar a peça selecionada">
+        <button type="button" data-act="rotL" aria-label="Girar à esquerda" title="Girar à esquerda" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+        <button type="button" data-act="rotR" aria-label="Girar à direita" title="Girar à direita" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg></button>
+        <button type="button" data-act="smaller" aria-label="Diminuir" title="Diminuir" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <button type="button" data-act="bigger" aria-label="Aumentar" title="Aumentar" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+        <button type="button" data-act="front" aria-label="Trazer para frente" title="Trazer para frente" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="2"/><rect class="fill" x="9" y="9" width="12" height="12" rx="2"/></svg></button>
+        <button type="button" data-act="back" aria-label="Enviar para trás" title="Enviar para trás" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="fill" x="3" y="3" width="12" height="12" rx="2"/><rect x="9" y="9" width="12" height="12" rx="2"/></svg></button>
+        <button type="button" data-act="dup" aria-label="Duplicar" title="Duplicar" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+        <button type="button" data-act="del" aria-label="Remover" title="Remover" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+      </div>
+      </div>
       <div class="stage-tools">
         <div class="doors" id="doors"><span>Porta</span></div>
         <div class="row" style="grid-template-columns:auto auto;gap:8px">
@@ -62,14 +74,19 @@
       <p class="hint">Teclado: setas movem a peça selecionada, [ e ] giram, + e − mudam o tamanho, Page Up e Page Down mudam a camada, Delete remove.</p>
     </div>
 
-    <div class="panel">
-      <section class="step" aria-labelledby="s1">
+    <div class="panel" data-tab="enfeites">
+      <div class="mtabs" role="tablist" aria-label="Etapas">
+        <button type="button" role="tab" data-mtab="base" aria-selected="false">Base e tamanho</button>
+        <button type="button" role="tab" data-mtab="enfeites" aria-selected="true">Enfeites</button>
+        <button type="button" role="tab" data-mtab="pedido" aria-selected="false">Pedido</button>
+      </div>
+      <section class="step" data-step="base" aria-labelledby="s1">
         <h2 id="s1"><span>1</span>Escolha a base e o tamanho</h2>
         <div class="bases" id="bases"></div>
         <div class="sizes" id="sizes" role="group" aria-label="Tamanho da guirlanda"></div>
       </section>
 
-      <section class="step" aria-labelledby="s2">
+      <section class="step" data-step="enfeites" aria-labelledby="s2">
         <h2 id="s2"><span>2</span>Adicione enfeites</h2>
         <div class="tabs" id="tabs" role="tablist" aria-label="Tipos de enfeite"></div>
         <div class="palette" id="palette"></div>
@@ -77,7 +94,7 @@
         <p class="small" style="margin-top:10px" id="count">0 de 40 peças</p>
       </section>
 
-      <section class="step" aria-labelledby="s3">
+      <section class="step" data-step="ajustar" aria-labelledby="s3">
         <h2 id="s3"><span>3</span>Ajuste a peça</h2>
         <p class="sel-name" id="selName">Nenhuma peça selecionada</p>
         <p class="sel-help" id="selHelp" aria-live="polite">Toque numa peça da guirlanda para ajustar.</p>
@@ -93,7 +110,7 @@
         </div>
       </section>
 
-      <section class="step" aria-labelledby="s4">
+      <section class="step" data-step="pedido" aria-labelledby="s4">
         <h2 id="s4"><span>4</span>Resumo</h2>
         <ul class="sum" id="sumList" aria-live="polite"></ul>
         <p class="photo-note" style="margin:0 0 4px">Entregamos pessoalmente, somente em Recife. Combine local e horário pelo WhatsApp.</p>

@@ -106,6 +106,36 @@ footer{margin-top:72px;background:var(--pine);color:var(--gold-l);padding:32px 0
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);background:var(--pine);color:#fff;padding:12px 22px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:.35s var(--ease);z-index:50;max-width:92vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
-@media(max-width:960px){.builder{grid-template-columns:1fr}.stage{position:static}.tools{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.bases{grid-template-columns:1fr 1fr 1fr;gap:6px}.row{grid-template-columns:1fr}.acts a{display:none}}
+.minibar,.mtabs{display:none}
+
+/* celular: a tela fica fixa no topo e tudo para editar fica logo abaixo, sem rolar */
+@media(max-width:960px){
+  header{position:static}
+  .intro{padding-block:16px 0}.intro h1{font-size:1.7rem}.intro p{display:none}
+  .builder{grid-template-columns:1fr;gap:0;padding-block:8px 0}
+  .stage{display:contents}
+  .stage-top{position:sticky;top:0;z-index:15;background:var(--snow);padding:6px 0 8px;box-shadow:0 8px 10px -8px rgba(14,58,43,.35)}
+  .stage-box{width:max-content;max-width:100%;margin:0 auto}
+  #canvas{height:max(220px,40vh);height:max(220px,40dvh);width:auto;max-width:100%}
+  .minibar{display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .minibar button{flex:1 0 44px;min-width:44px;height:44px;display:grid;place-items:center;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:0;color:var(--pine)}
+  .minibar button:not(:disabled):active{background:var(--t3);border-color:var(--gold)}
+  .minibar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .minibar svg .fill{fill:currentColor}
+  .stage-tools{margin-top:10px}
+  .hint{display:none}
+  .mtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0 10px}
+  .mtabs button{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:10px 6px;font-size:.9rem;font-weight:600;min-height:44px}
+  .mtabs button[aria-selected="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .panel{gap:0}
+  .panel .step{display:none;padding:14px}
+  .panel[data-tab="base"] [data-step="base"],.panel[data-tab="enfeites"] [data-step="enfeites"],.panel[data-tab="pedido"] [data-step="pedido"]{display:block}
+  .step h2{display:none}
+  .palette{grid-template-columns:repeat(4,1fr);gap:8px}
+  .pick{padding:8px 4px}.pick svg{width:52px;height:52px;margin-bottom:4px}.pick span{font-size:.74rem}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.tabs button{flex:none;min-height:40px}
+  .tabs button,.size-card,.base-card{min-height:44px}
+  .btn{min-height:48px}
+}
+@media(max-width:520px){.bases{grid-template-columns:1fr 1fr 1fr;gap:6px}.row{grid-template-columns:1fr}.acts a{display:none}.palette{grid-template-columns:repeat(3,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

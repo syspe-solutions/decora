@@ -360,6 +360,15 @@
     });
   });
 
+  // celular: abas (Base e tamanho / Enfeites / Pedido) para não precisar rolar a página
+  var panelEl = $('.panel');
+  document.querySelectorAll('[data-mtab]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      panelEl.dataset.tab = b.dataset.mtab;
+      document.querySelectorAll('[data-mtab]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+    });
+  });
+
   /* ---------- início ---------- */
   load();
   buildPalette();
