@@ -128,7 +128,9 @@
       '📸 Segue a foto do meu projeto.',
       hasPhoto ? '🖼️ Vou mandar aqui as fotos para as bolas com foto.' : null,
       '',
-      'Pode me passar o valor, o prazo de entrega e as formas de pagamento? Quero fechar hoje para garantir que chegue antes do Natal! 🎁❤️'
+      '📍 Vocês entregam pessoalmente em Recife? Posso te passar meu bairro.',
+      '',
+      'Pode me passar o valor, a data de entrega e as formas de pagamento? Quero fechar hoje para garantir que chegue antes do Natal! 🎁❤️'
     ].filter(function (l) { return l !== null; }).join('\n');
   }
   function updateCta() {
